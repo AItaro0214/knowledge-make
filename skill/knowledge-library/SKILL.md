@@ -46,6 +46,10 @@ Rules:
 - MCP: `library_write({ domain, claim, body, tags, confidence, source })` - returns `similar` instead of writing when the guard fires; call again with `mode`.
 - CLI: `kb add --domain <d> --claim "..." --body-file notes.md --tags a,b`
 
+## Language and conventions
+
+If `KNOWLEDGE_DIR/CONVENTIONS.md` exists, read it once before your first write in a session and follow it (which language claims and bodies are written in, tag style, domain naming). It overrides the examples here. Without it, write everything in English.
+
 ## After writing
 
 Run `kb sync` (git add/commit/push in the data repo). That is the backup; nothing else does it. Use `kb sync --dry-run` to see what would be committed.
