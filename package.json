@@ -1,0 +1,22 @@
+{
+  "name": "knowledge-make",
+  "version": "0.1.0",
+  "description": "External long-term knowledge library for coding agents: three-level (catalog / conclusions / bodies) markdown store with a CLI and an MCP server.",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=24"
+  },
+  "bin": {
+    "kb": "bin/kb.mjs",
+    "kb-mcp": "bin/kb-mcp.mjs"
+  },
+  "scripts": {
+    "test": "node test/smoke.mjs",
+    "mcp": "node bin/kb-mcp.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "zod": "^4.6.7"
+  }
+}
