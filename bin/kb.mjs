@@ -142,7 +142,7 @@ async function main(argv) {
       if (!r.changes.length) { out('nothing to sync'); return 0; }
       out('changes:');
       for (const c of r.changes) out(`  ${c}`);
-      out(`commit message: ${r.summary}`);
+      out(`commit message: ${o.message || r.summary}`);
       if (!r.committed) { out('dry run; nothing committed'); return 0; }
       out(r.pushed ? 'committed and pushed' : `committed; push failed: ${r.pushError}`);
       return r.pushed ? 0 : 1;
