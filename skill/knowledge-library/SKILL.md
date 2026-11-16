@@ -50,6 +50,10 @@ Rules:
 
 If `KNOWLEDGE_DIR/CONVENTIONS.md` exists, read it once before your first write in a session and follow it (which language claims and bodies are written in, tag style, domain naming). It overrides the examples here. Without it, write everything in English.
 
+## Keeping it current
+
+Read `docs/for-agents.md` in the knowledge-make repository for the full guidance: what is worth storing (post-cutoff and *updating* facts), how to update or supersede instead of piling up, source rules, and a self-updating loop (divergent search by light agents, convergent review and one-off deep dives by a strong model). A ready-to-adapt scheduled procedure is in `examples/daily-update/SKILL.md`.
+
 ## After writing
 
 Run `kb sync` (git add/commit/push in the data repo). That is the backup; nothing else does it. Use `kb sync --dry-run` to see what would be committed.

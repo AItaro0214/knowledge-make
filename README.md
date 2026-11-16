@@ -18,6 +18,8 @@ Claude Code や Codex のようなコーディングエージェントに、外�
 
 データベースも、裏で動く定期処理もありません。保存先は自分で用意したgitリポジトリ（非公開をおすすめします）で、`kb sync` でコミットとpushを行い、これがバックアップになります。手入れは手作業で行う前提で、`kb stats` は項目の多すぎる分野や古い項目を一覧にするだけです。
 
+中身を新しく保つための手引きは、LLM・エージェント向けに `docs/for-agents.md` にまとめました。入れる価値のある知識（学習の締め切り後の事実と、前の知識を書き換える事実）、重複を積まずに更新・置き換えする方法、出典の決まり、平日に自動で中身を足す手順の例（`examples/daily-update/SKILL.md`）を載せています。
+
 導入の手順、コマンドの一覧、MCPサーバーの設定（Claude Code と Codex）は、下の英語の説明を見てください。
 
 ---
@@ -139,6 +141,12 @@ Point Codex at `skill/knowledge-library/SKILL.md` from your `AGENTS.md`, or past
 | `KB_SELECTOR_TIMEOUT_MS` | `90000` | selector timeout; on failure falls back to keywords and says so on stderr |
 | `KB_CLAUDE_BIN` | `claude` | path to the Claude Code binary |
 | `KB_PREFILTER_LIMIT` | `200` | candidate lists longer than this are keyword-prefiltered before the selector sees them |
+
+## For LLMs and agents
+
+- [docs/for-agents.md](docs/for-agents.md): what to store, how to update instead of piling up, source rules, token habits, and a self-updating loop.
+- [examples/CONVENTIONS.md](examples/CONVENTIONS.md): a house-rules file to copy into your `KNOWLEDGE_DIR`.
+- [examples/daily-update/SKILL.md](examples/daily-update/SKILL.md): a scheduled update procedure (parallel light-model search with adjacent-field exploration, a strong-model editor, one-off deep dives).
 
 ## Writing good entries
 
