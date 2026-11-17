@@ -65,7 +65,7 @@ Claims and bodies per CONVENTIONS.md. Collect entries in `$TODAY/entries.json` (
 
 ## 7. Back up and report
 - `kb sync -m "Daily update TODAY: N entries"`.
-- Optional: send a notification with the count and the next deep-dive topics.
+- Optional: send a notification with the count and the next deep-dive topics. Send non-ASCII text from a UTF-8 file (e.g. `curl --data-binary @msg.json` or a small script), not as a command-line argument: on Windows, shells may re-encode arguments (e.g. to cp932) and the text arrives garbled.
 - Finish `log.md`: per field - searched, adjacent fields, kept (ids), dropped with reasons, blocked pages; deep-dive verdicts; hypotheses; next questions; entries added and the sync exit code.
 
 ## Scheduling
