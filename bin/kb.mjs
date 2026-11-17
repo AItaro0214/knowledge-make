@@ -10,6 +10,8 @@ const HELP = `kb - external long-term knowledge library for coding agents
 Usage:
   kb search "<task>" [-k 8] [--no-llm]       conclusions relevant to a task (id | claim)
   kb read <id...>                             body text of entries
+  kb list [--domain d] [--tag t] [--confidence verified] [--since YYYY-MM-DD] [--limit n]
+                                              headings filtered without any model (id | updated | confidence | claim)
   kb add --domain <d|auto> --claim "<one sentence>" --body-file <f>
          [--tags a,b] [--confidence verified|observed|hypothesis] [--source <s>]
          [--new | --supersede <id> | --update <id>] [--no-llm]
@@ -46,6 +48,10 @@ const OPTIONS = {
   'dry-run': { type: 'boolean' },
   message: { type: 'string', short: 'm' },
   json: { type: 'boolean' },
+  domain: { type: 'string', multiple: true },
+  tag: { type: 'string', multiple: true },
+  since: { type: 'string' },
+  limit: { type: 'string' },
 };
 
 async function main(argv) {
@@ -66,6 +72,13 @@ async function main(argv) {
       const hits = await kb.search(query, { k: Number(o.k || 8), llm });
       if (o.json) out(JSON.stringify(hits, null, 2));
       else for (const h of hits) out(`${h.id} | ${h.claim}`);
+      return 0;
+    }
+    case 'list': {
+      const csv = (v) => (Array.isArray(v) ? v : v ? [v] : []).flatMap((x) => String(x).split(',')).map((x) => x.trim()).filter(Boolean);
+      const rows = await kb.list({ domains: csv(o.domain), tags: csv(o.tag), confidence: csv(o.confidence), since: o.since || null, limit: Number(o.limit || 0) });
+      if (o.json) out(JSON.stringify(rows, null, 2));
+      else for (const r of rows) out(`${r.id} | ${r.updated || '-'} | ${r.confidence} | ${r.claim}`);
       return 0;
     }
     case 'read': {

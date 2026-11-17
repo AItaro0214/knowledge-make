@@ -15,6 +15,31 @@ const json = (o) => text(JSON.stringify(o, null, 2));
 const fail = (msg) => ({ content: [{ type: 'text', text: msg }], isError: true });
 
 server.registerTool(
+  'library_list',
+  {
+    title: 'List conclusions by filter (no model)',
+    description:
+      'List live conclusions filtered by domain, tag, confidence and update date - e.g. only verified ones, or only those updated since a date. Cheap: no selector model is called.',
+    inputSchema: {
+      domains: z.array(z.string()).optional(),
+      tags: z.array(z.string()).optional(),
+      confidence: z.array(z.enum(['verified', 'observed', 'hypothesis'])).optional(),
+      since: z.string().optional().describe('YYYY-MM-DD: only entries updated on or after this date'),
+      limit: z.number().int().min(1).max(500).optional(),
+    },
+  },
+  async (a) => {
+    try {
+      const rows = await kb.list(a);
+      if (!rows.length) return text('(nothing matches)');
+      return text(rows.map((r) => `${r.id} | ${r.updated || '-'} | ${r.confidence} | ${r.claim}`).join('\n'));
+    } catch (err) {
+      return fail(err.message);
+    }
+  },
+);
+
+server.registerTool(
   'library_search',
   {
     title: 'Search the knowledge library',

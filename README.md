@@ -74,6 +74,8 @@ The default selector runs `claude -p --model haiku`, so the [Claude Code](https:
 ```
 kb search "<task>" [-k 8] [--no-llm]       conclusions relevant to a task (id | claim)
 kb read <id...>                             body text
+kb list [--domain d] [--tag t] [--confidence verified] [--since YYYY-MM-DD] [--limit n]
+                                            headings filtered without any model
 kb add --domain <d|auto> --claim "<one sentence>" --body-file <f>
        [--tags a,b] [--confidence verified|observed|hypothesis] [--source <s>]
        [--new | --supersede <id> | --update <id>]
@@ -105,6 +107,7 @@ kb sync
 | tool | purpose |
 | --- | --- |
 | `library_search` | `{task, k?, llm?}` -> `id \| claim` lines |
+| `library_list` | `{domains?, tags?, confidence?, since?, limit?}` -> filtered `id \| updated \| confidence \| claim` lines, no model call |
 | `library_read` | `{ids}` -> bodies |
 | `library_write` | `{domain, claim, body, tags?, confidence?, source?, mode?, target?}` -> writes, or returns `similar` candidates when the guard fires |
 
@@ -137,6 +140,7 @@ Point Codex at `skill/knowledge-library/SKILL.md` from your `AGENTS.md`, or past
 | --- | --- | --- |
 | `KNOWLEDGE_DIR` | `~/knowledge` | data repo |
 | `KB_SELECTOR` | `claude` | `claude` or `none` |
+| `KB_MAX_DOMAINS` | `3` | how many domains a search may open; only the headings of those domains are read |
 | `KB_SELECTOR_MODEL` | `haiku` | model passed to `claude -p --model` |
 | `KB_SELECTOR_TIMEOUT_MS` | `90000` | selector timeout; on failure falls back to keywords and says so on stderr |
 | `KB_CLAUDE_BIN` | `claude` | path to the Claude Code binary |
